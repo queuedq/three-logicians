@@ -1,0 +1,105 @@
+/* Layout */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.cols {
+  display: flex;
+}
+
+.col {
+  flex: 1;
+  border: 1px solid cyan;
+}
+
+h2 {
+  text-align: center;
+}
+
+label {
+  display: block;
+}
+
+/* Table Styling */
+.table-container {
+  position: relative;
+}
+
+table {
+  margin: 0 auto;
+  table-layout:fixed;
+  border-collapse: collapse;
+}
+
+th, td {
+  width: 36px;
+  position: relative;
+}
+
+th::after, td::after {
+  content: '';
+  display: block;
+  margin-top: 100%;
+}
+
+th .content, td .content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.column-header {
+  align-items: flex-end;
+  border-bottom: 1px solid black;
+}
+
+.row-header {
+  justify-content: flex-end;
+  padding-right: 4px;
+  border-right: 1px solid black;
+}
+
+.cell {
+  border-width: 0 1px 1px 0;
+  border-style: solid;
+  border-color: #ddd;
+}
+
+/* Table label styling */
+.column-label {
+  position: absolute;
+  top: 0;
+  left: 140px;
+}
+
+.row-label {
+  position: absolute;
+  top: 160px;
+  left: -30px;
+  transform: rotate(-90deg);
+}
+
+
+/* Table cell styling */
+.is-dark {
+  color: #999 !important;
+  background-color: #555 !important;
+}
+
+.is-active {
+  color: red;
+}
+
+.is-highlighted {
+  background-color: #ffddff;
+}
