@@ -10,7 +10,7 @@ library.add(faTimes);
 const people = [
   {name: '현모', color: '#603ff8', highlight: '#cac7ff'},
   {name: '동규', color: '#57af23', highlight: '#c4ff80'},
-  {name: '충명', color: '#d49450', highlight: '#ffe7a0'}
+  {name: '충명', color: '#dd9d3a', highlight: '#ffe7a0'}
 ];
 
 const Person = ({index}) => {
@@ -157,8 +157,14 @@ class Table extends Component {
               <tr key={row}>
                 {/* Row header */}
                 <th>
+                  {/* NanumSquare assigns an empty glyph for unsupported characters. */}
+                  {/* For that reason, using font fallback with NanumSquare is not possible. */}
+                  {/* To use character '⋮', I added 'no-nanumsquare' CSS class here. */}
                   <div
-                    className="content row-header"
+                    className={classnames(
+                      'content row-header',
+                      {'no-nanumsquare': row === this.displayedRows.length - 1},
+                    )}
                     onClick={() => this.toggleRow(row)}
                     style={{
                       color: this.state.highlightedRows[row]
@@ -235,7 +241,7 @@ class App extends Component {
       <div>
         <div className="cols">
           <div className="col">
-            <h2><Person index={0} /></h2>
+            <h1><Person index={0} /></h1>
             <Table
               person={0}
               colPerson={2}
@@ -244,7 +250,7 @@ class App extends Component {
             />
           </div>
           <div className="col">
-            <h2><Person index={1} /></h2>
+            <h1><Person index={1} /></h1>
             <Table
               person={1}
               colPerson={2}
@@ -253,7 +259,7 @@ class App extends Component {
             />
           </div>
           <div className="col">
-            <h2><Person index={2} /></h2>
+            <h1><Person index={2} /></h1>
             <Table
               person={2}
               colPerson={1}

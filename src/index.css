@@ -1,20 +1,28 @@
-/* Layout */
+/******** Layout ********/
 body {
   margin: 0;
   padding: 0;
+  font-family: NanumSquare, sans-serif;
+}
+
+.no-nanumsquare {
+  /* NanumSquare assigns an empty glyph for unsupported characters. */
+  /* For that reason, using font fallback with NanumSquare is not possible. */
+  /* To use character '⋮', I added 'no-nanumsquare' CSS class. */
   font-family: sans-serif;
 }
 
 .cols {
   display: flex;
+  width: 1200px;
 }
 
 .col {
   flex: 1;
-  border: 1px solid cyan;
+  padding-bottom: 45px;
 }
 
-h2 {
+h1 {
   text-align: center;
 }
 
@@ -22,13 +30,13 @@ label {
   display: block;
 }
 
-/* Table Styling */
+/******** Table Styling ********/
 .table-container {
   position: relative;
 }
 
 table {
-  margin: 0 auto;
+  margin-left: 20px;
   table-layout:fixed;
   border-collapse: collapse;
 }
@@ -75,22 +83,40 @@ th .content, td .content {
   border-color: #ddd;
 }
 
-/* Table label styling */
+/******** Table label styling ********/
 .column-label {
   position: absolute;
-  top: 0;
+  top: -4px;
   left: 140px;
 }
 
 .row-label {
   position: absolute;
-  top: 160px;
-  left: -30px;
-  transform: rotate(-90deg);
+  top: 190px;
+  left: -45px;
+  transform: rotate(90deg);
 }
 
+/******** Table cell styling ********/
+.empty {
+  position: relative;
+}
 
-/* Table cell styling */
+.empty::after {
+  content: '';
+  margin: 0;
+  width: 1px;
+  height: 1px;
+  background-color: black;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.cell {
+  color: #444;
+}
+
 .is-dark {
   color: #999 !important;
   background-color: #555 !important;
