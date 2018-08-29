@@ -15,6 +15,7 @@ body {
 .cols {
   display: flex;
   width: 1200px;
+  background: white;
 }
 
 .col {
