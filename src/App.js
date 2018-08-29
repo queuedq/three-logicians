@@ -89,8 +89,8 @@ class Table extends Component {
       state.isActive.push([]);
       state.isHighlighted.push([]);
       for (let j = 0; j <= this.displayedColumns.length; j++) {
-        state.isDisabled[i].push(i == j);
-        state.isDark[i].push(i == j);
+        state.isDisabled[i].push(i === j);
+        state.isDark[i].push(i === j);
         state.isActive[i].push(false);
         state.isHighlighted[i].push(false);
       }
