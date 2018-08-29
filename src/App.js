@@ -61,7 +61,7 @@ class Table extends Component {
     super(props);
 
     this.displayedColumns = [1, 2, 3, 4, 5, 6, 7, '⋯'];
-    this.displayedRows = [1, 2, 3, 4, 5, 6, 7, 8, '⋮'];
+    this.displayedRows = [1, 2, 3, 4, 5, 6, 7, '⋮'];
     this.editCell = this.editCell.bind(this);
     this.toggleColumn = this.toggleColumn.bind(this);
     this.toggleRow = this.toggleRow.bind(this);
