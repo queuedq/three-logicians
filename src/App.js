@@ -21,14 +21,48 @@ const Person = ({index}) => {
   );
 }
 
+const EditTypeSelector = ({editType, onSelectionChange}) => {
+  return (
+    <div>
+      Select edit type:
+      <label>
+        <input
+          value="isDisabled"
+          type="radio"
+          checked={editType === 'isDisabled'}
+          onChange={onSelectionChange}
+        />
+        isDisabled (Display X mark)
+      </label>
+      <label>
+        <input
+          value="isActive"
+          type="radio"
+          checked={editType === 'isActive'}
+          onChange={onSelectionChange}
+        />
+        isActive (Color X mark)
+      </label>
+      <label>
+        <input
+          value="isHighlighted"
+          type="radio"
+          checked={editType === 'isHighlighted'}
+          onChange={onSelectionChange}
+        />
+        isHighlighted (Highlight cell color)
+      </label>
+    </div>
+  );
+};
+
 class Table extends Component {
   constructor(props) {
     super(props);
 
     this.displayedColumns = [1, 2, 3, 4, 5, 6, 7, '⋯'];
     this.displayedRows = [1, 2, 3, 4, 5, 6, 7, 8, '⋮'];
-    this.toggleCell = this.toggleCell.bind(this);
-    this.togglePropertyFilter = this.togglePropertyFilter.bind(this);
+    this.editCell = this.editCell.bind(this);
     this.toggleColumn = this.toggleColumn.bind(this);
     this.toggleRow = this.toggleRow.bind(this);
   }
@@ -73,19 +107,12 @@ class Table extends Component {
     this.setState(state);
   }
 
-  toggleCell(row, col) {
+  editCell(row, col) {
     const nextState = Object.assign({}, this.state);
-    Object.keys(nextState.propertyFilter).map(property => {
-      nextState[property][row][col] =
-        nextState.propertyFilter[property] ^ nextState[property][row][col];
-    })
-    this.setState(nextState);
-  }
+    const editType = this.props.editType;
+    nextState[editType][row][col] = !nextState[editType][row][col];
 
-  togglePropertyFilter(filterName) {
-    const nextFilter = Object.assign({}, this.state.propertyFilter);
-    nextFilter[filterName] = !nextFilter[filterName];
-    this.setState({propertyFilter: nextFilter});
+    this.setState(nextState);
   }
 
   toggleColumn(col) {
@@ -107,7 +134,7 @@ class Table extends Component {
         <table>
           <tbody>
             <tr>
-              <td></td>
+              <td className="empty"></td>
               {/* Column headers */}
               {this.displayedColumns.map((_, col) =>
                 <th key={col}>
@@ -160,7 +187,7 @@ class Table extends Component {
                               ? people[this.props.rowPerson].highlight
                               : ''
                         }}
-                        onClick={() => this.toggleCell(row, col)}
+                        onClick={() => this.editCell(row, col)}
                       >
                         {this.state.isDisabled[row][col]
                           ? <FontAwesomeIcon icon="times" size="2x" />
@@ -182,43 +209,27 @@ class Table extends Component {
           <Person index={this.props.rowPerson} />
           의 모자에 적힌 수
         </div>
-
-        <div>
-          Toggle Filters
-          <label>
-            <input
-              name="isDisabled"
-              type="checkbox"
-              checked={this.state.propertyFilter.isDisabled}
-              onChange={() => this.togglePropertyFilter('isDisabled')}
-            />
-            isDisabled (Display X mark)
-          </label>
-          <label>
-            <input
-              name="isActive"
-              type="checkbox"
-              checked={this.state.propertyFilter.isActive}
-              onChange={() => this.togglePropertyFilter('isActive')}
-            />
-            isActive (Color X mark)
-          </label>
-          <label>
-            <input
-              name="isHighlighted"
-              type="checkbox"
-              checked={this.state.propertyFilter.isHighlighted}
-              onChange={() => this.togglePropertyFilter('isHighlighted')}
-            />
-            isHighlighted (Highlight cell color)
-          </label>
-        </div>
       </div>
     );
   }
 }
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editType: 'isDisabled'
+    };
+
+    this.handleEditTypeChange = this.handleEditTypeChange.bind(this);
+  }
+
+  handleEditTypeChange(e) {
+    this.setState({
+      editType: e.target.value
+    });
+  }
+
   render() {
     return (
       <div>
@@ -229,6 +240,7 @@ class App extends Component {
               person={0}
               colPerson={2}
               rowPerson={1}
+              editType={this.state.editType}
             />
           </div>
           <div className="col">
@@ -237,6 +249,7 @@ class App extends Component {
               person={1}
               colPerson={2}
               rowPerson={0}
+              editType={this.state.editType}
             />
           </div>
           <div className="col">
@@ -245,9 +258,14 @@ class App extends Component {
               person={2}
               colPerson={1}
               rowPerson={0}
+              editType={this.state.editType}
             />
           </div>
         </div>
+        <EditTypeSelector
+          editType={this.state.editType}
+          onSelectionChange={this.handleEditTypeChange}
+        />
       </div>
     );
   }
