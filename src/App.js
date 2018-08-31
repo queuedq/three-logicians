@@ -27,21 +27,21 @@ const EditTypeSelector = ({editType, onSelectionChange}) => {
       Select edit type:
       <label>
         <input
-          value="isDisabled"
+          value="blackMark"
           type="radio"
-          checked={editType === 'isDisabled'}
+          checked={editType === 'blackMark'}
           onChange={onSelectionChange}
         />
-        isDisabled (Display X mark)
+        Display black X mark
       </label>
       <label>
         <input
-          value="isActive"
+          value="redMark"
           type="radio"
-          checked={editType === 'isActive'}
+          checked={editType === 'redMark'}
           onChange={onSelectionChange}
         />
-        isActive (Color X mark)
+        Display red X mark
       </label>
       <label>
         <input
@@ -69,14 +69,13 @@ class Table extends Component {
 
   componentWillMount() {
     const state = {
-      isDisabled: [],
+      markType: [],
       isDark: [],
-      isActive: [],
       isHighlighted: [],
       propertyFilter: {
-        isDisabled: true,
+        blackMark: true,
+        redMark: false,
         isDark: false,
-        isActive: false,
         isHighlighted: false
       },
       highlightedColumns: [],
@@ -84,14 +83,12 @@ class Table extends Component {
     }
 
     for (let i = 0; i <= this.displayedRows.length; i++) {
-      state.isDisabled.push([]);
+      state.markType.push([]);
       state.isDark.push([]);
-      state.isActive.push([]);
       state.isHighlighted.push([]);
       for (let j = 0; j <= this.displayedColumns.length; j++) {
-        state.isDisabled[i].push(i === j);
+        state.markType[i].push(i === j ? 1 : 0);
         state.isDark[i].push(i === j);
-        state.isActive[i].push(false);
         state.isHighlighted[i].push(false);
       }
     }
@@ -110,7 +107,22 @@ class Table extends Component {
   editCell(row, col) {
     const nextState = Object.assign({}, this.state);
     const editType = this.props.editType;
-    nextState[editType][row][col] = !nextState[editType][row][col];
+    if (editType === 'isHighlighted') {
+      nextState.isHighlighted[row][col] = !nextState.isHighlighted[row][col];
+    } else if (editType === 'blackMark') {
+      if (nextState.markType[row][col] !== 1) {
+        nextState.markType[row][col] = 1
+      } else {
+        nextState.markType[row][col] = 0
+      }
+    } else if (editType === 'redMark') {
+      console.log('here')
+      if (nextState.markType[row][col] !== 2) {
+        nextState.markType[row][col] = 2
+      } else {
+        nextState.markType[row][col] = 0
+      }
+    }
 
     this.setState(nextState);
   }
@@ -183,7 +195,7 @@ class Table extends Component {
                         className={classnames(
                           'content',
                           {'is-dark': this.state.isDark[row][col]},
-                          {'is-active': this.state.isActive[row][col]},
+                          {'is-red-mark': this.state.markType[row][col] === 2},
                           {'is-highlighted': this.state.isHighlighted[row][col]},
                         )}
                         style={{
@@ -195,7 +207,7 @@ class Table extends Component {
                         }}
                         onClick={() => this.editCell(row, col)}
                       >
-                        {this.state.isDisabled[row][col]
+                        {this.state.markType[row][col] !== 0
                           ? <FontAwesomeIcon icon="times" size="2x" />
                           : ''}
                       </div>
@@ -224,7 +236,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editType: 'isDisabled'
+      editType: 'blackMark'
     };
 
     this.handleEditTypeChange = this.handleEditTypeChange.bind(this);
