@@ -116,7 +116,6 @@ class Table extends Component {
         nextState.markType[row][col] = 0
       }
     } else if (editType === 'redMark') {
-      console.log('here')
       if (nextState.markType[row][col] !== 2) {
         nextState.markType[row][col] = 2
       } else {
