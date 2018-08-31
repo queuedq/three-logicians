@@ -20,7 +20,7 @@ body {
 
 .col {
   flex: 1;
-  padding-bottom: 45px;
+  padding-bottom: 35px;
 }
 
 h1 {
@@ -88,7 +88,7 @@ th .content, td .content {
 .column-label {
   position: absolute;
   top: -4px;
-  left: 140px;
+  left: 145px;
 }
 
 .row-label {

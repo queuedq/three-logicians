@@ -253,7 +253,7 @@ class App extends Component {
       <div>
         <div className="cols">
           <div className="col">
-            <h1><Person index={0} /></h1>
+            <h1><Person index={0} />의 시점</h1>
             <Table
               person={0}
               colPerson={2}
@@ -262,7 +262,7 @@ class App extends Component {
             />
           </div>
           <div className="col">
-            <h1><Person index={1} /></h1>
+            <h1><Person index={1} />의 시점</h1>
             <Table
               person={1}
               colPerson={2}
@@ -271,7 +271,7 @@ class App extends Component {
             />
           </div>
           <div className="col">
-            <h1><Person index={2} /></h1>
+            <h1><Person index={2} />의 시점</h1>
             <Table
               person={2}
               colPerson={1}
